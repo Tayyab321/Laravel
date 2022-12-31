@@ -46,8 +46,6 @@ class ProductController extends Controller
         $Prod->Description = $request['desc'];
 
         $Prod->save();
-
-        // return redirect()->route('products.index')->with('status','You have successfully submitted!!');
         return redirect()->route('products.index')->with('status','You have successfully submitted the form!!');
 
     }
@@ -71,7 +69,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+       $Prod = Product::find($id);
+       $data = compact('Prod');
+       return view('Product.EditProd')->with($data);
     }
 
     /**
@@ -83,7 +83,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $Prod = Product::find($id);
+       $Prod = $request['name'];
+       $Prod = $request['price'];
+       $Prod = $request['email'];
+       $Prod = $request['desc'];
+       
+       $Prod->save();
+       return redirect()->route('products.index')->with('status','Data Updated Successfuly!');
     }
 
     /**

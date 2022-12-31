@@ -13,6 +13,7 @@
                 <th>Description</th>
                 <th>Created at</th>
                 <th>Updated at</th>
+                <th></th>
 
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                     <td>{{$key->Description}}</td>
                     <td>{{$key->created_at}}</td>
                     <td>{{$key->updated_at}}</td>
+                    <td><a href="{{route('products.edit',$key->id)}}" class = "btn btn-primary">Edit</a></td>
                      
                     </tr>
                 @endforeach
