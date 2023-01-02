@@ -84,11 +84,11 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
        $Prod = Product::find($id);
-       $Prod = $request['name'];
-       $Prod = $request['price'];
-       $Prod = $request['email'];
-       $Prod = $request['desc'];
-       
+       $Prod->Pname = $request['name'];
+       $Prod->Price = $request['price'];
+       $Prod->Email = $request['email'];
+       $Prod->Description = $request['desc'];
+
        $Prod->save();
        return redirect()->route('products.index')->with('status','Data Updated Successfuly!');
     }
@@ -101,6 +101,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $Prod = Product::find($id);
+       $Prod->delete();
+
+       return redirect()->route('products.index')->with('statusDelete','Product Deleted Successfully');
     }
 }

@@ -4,6 +4,10 @@
 
         @if(session('status'))
                 <script> alert("{{session('status')}}")</script>
+        
+
+        @elseif(session('statusDelete'))
+                <script>alert("{{session('statusDelete')}}")</script>
         @endif
         <table class="table table-light">
             <thead>
@@ -27,6 +31,13 @@
                     <td>{{$key->created_at}}</td>
                     <td>{{$key->updated_at}}</td>
                     <td><a href="{{route('products.edit',$key->id)}}" class = "btn btn-primary">Edit</a></td>
+                    <td>
+                        <form action="{{route('products.destroy',$key->id)}}" method = "post">
+                            @csrf
+                            @method('DELETE')
+                            <button type = "submit" class = "btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                      
                     </tr>
                 @endforeach
