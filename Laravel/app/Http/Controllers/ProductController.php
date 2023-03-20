@@ -20,6 +20,10 @@ class ProductController extends Controller
         return view('Product.ListProd')->with($data);
     }
 
+    public function reloadCaptcha(){
+        return response()->json(['captcha'=> captcha_img()]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -27,6 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        // return response()->json(['captcha'=> captcha_img()]);
         return view('Product.AddProd');
     }
 
@@ -38,12 +43,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'email' => 'required',
+            'desc' => 'required',
+            'captcha'=> 'required|captcha',
+        ]);
         
         $Prod = new Product(); //model class obj
         $Prod->Pname = $request['name'];
         $Prod->Price = $request['price'];
         $Prod->Email = $request['email'];
         $Prod->Description = $request['desc'];
+
+        $files = $request->file('image');
+        $fileName = $files->getClientOriginalName();
+        $folder = "Images/";
+        $fileLoc = $folder.$fileName;
+        $files->move($folder,$fileLoc);
+        $Prod->ProdImage = $fileLoc; 
 
         $Prod->save();
         return redirect()->route('products.index')->with('status','You have successfully submitted the form!!');
@@ -70,7 +89,7 @@ class ProductController extends Controller
     public function edit($id)
     {
        $Prod = Product::find($id);
-       $data = compact('Prod');
+       $data = compact('Prod');//array form
        return view('Product.EditProd')->with($data);
     }
 
@@ -83,6 +102,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'email' => 'required',
+            'desc' => 'required',
+        ]);
+
        $Prod = Product::find($id);
        $Prod->Pname = $request['name'];
        $Prod->Price = $request['price'];

@@ -1,5 +1,4 @@
 @include('Layout.header')
-
   
 <div class="container"> <br>
 <h3>Insert Data In DataBase</h3> <br>
@@ -35,6 +34,10 @@
         
     </span>
   </div>
+  <div class="form-group">
+          <label for="img">Image:</label><br>
+          <input type="file" id="img" name="image" value = "{{$Prod->ProdImage}}">
+        </div>
 
   <div class="form-group">
     <label for="pwd">Description:</label>
@@ -49,7 +52,7 @@
 
   <button type="submit" class="btn btn-primary" name = "ins">Update</button>
 
-<a class="btn btn-secondary" href=""><i class="fa fa-list-alt"></i> View All</a>
+<a class="btn btn-secondary" href="{{route('products.index')}}"><i class="fa fa-list-alt"></i> View All</a>
 
 
 </div>

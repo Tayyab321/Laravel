@@ -5,7 +5,6 @@
         @if(session('status'))
                 <script> alert("{{session('status')}}")</script>
         
-
         @elseif(session('statusDelete'))
                 <script>alert("{{session('statusDelete')}}")</script>
         @endif
@@ -17,6 +16,8 @@
                 <th>Description</th>
                 <th>Created at</th>
                 <th>Updated at</th>
+                <th>Image</th>
+                <a href="{{route('add')}}">Form</a>
                 <th></th>
 
             </thead>
@@ -30,7 +31,9 @@
                     <td>{{$key->Description}}</td>
                     <td>{{$key->created_at}}</td>
                     <td>{{$key->updated_at}}</td>
+                    <td><img src="{{$key->ProdImage}}" width = "100px" height = "100px" alt=""></td>
                     <td><a href="{{route('products.edit',$key->id)}}" class = "btn btn-primary">Edit</a></td>
+                    
                     <td>
                         <form action="{{route('products.destroy',$key->id)}}" method = "post">
                             @csrf
